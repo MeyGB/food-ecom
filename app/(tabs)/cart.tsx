@@ -1,12 +1,12 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-const Index = () => {
+const Cart = () => {
   return (
     <View>
-      <Text>home</Text>
+      <Text>Cart</Text>
     </View>
   )
 }
 
-export default Index
+export default Cart
