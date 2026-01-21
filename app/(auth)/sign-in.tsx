@@ -1,14 +1,16 @@
 import CustomButton from "@/components/CustomButton";
 import CustonInput from "@/components/CustonInput";
+import { account } from "@/service/Appwrite";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
+import { ID } from "react-native-appwrite";
 
 const SignIn = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
 
-  const submit = async () => {
+  const submit = async (email: string, password: string) => {
     // Appwrite Api Account
     //Condition if valid email and password
     if (!form.email || !form.password) {
@@ -17,6 +19,7 @@ const SignIn = () => {
     }
     try {
       setIsSubmitted(true);
+      await account.create(ID.unique(), email, password);
       Alert.alert("Success", "Login Sucessfully");
       router.replace("/");
     } catch (error: any) {
