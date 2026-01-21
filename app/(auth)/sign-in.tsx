@@ -4,13 +4,12 @@ import { account } from "@/service/Appwrite";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
-import { ID } from "react-native-appwrite";
 
 const SignIn = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
 
-  const submit = async (email: string, password: string) => {
+  const submit = async () => {
     // Appwrite Api Account
     //Condition if valid email and password
     if (!form.email || !form.password) {
@@ -19,9 +18,11 @@ const SignIn = () => {
     }
     try {
       setIsSubmitted(true);
-      await account.create(ID.unique(), email, password);
+      await account.createEmailPasswordSession(form.email, form.password);
       Alert.alert("Success", "Login Sucessfully");
+      setForm({ email: "", password: "" });
       router.replace("/");
+      return;
     } catch (error: any) {
       Alert.alert("Login failed", error?.message || "Something went wrong");
     } finally {
