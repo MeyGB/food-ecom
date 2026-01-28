@@ -5,6 +5,7 @@ import {
   Client,
   Databases,
   ID,
+  Query,
   Storage,
 } from "react-native-appwrite";
 
@@ -55,5 +56,23 @@ export const userSignIn = async ({ email, password }: SignInParams) => {
     return session;
   } catch (e: any) {
     throw new Error(e);
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const currentAccount = await account.get();
+    // Checks if a session exists
+    if (!currentAccount) throw Error;
+    const response = await database.listDocuments(db_name, table_user, [
+      Query.equal("accountid", currentAccount.$id),
+    ]);
+    // Each user should only have one profile
+    console.log(response);
+
+    return response.documents[0] ?? null;
+  } catch (error) {
+    console.log("message", error);
+    throw new Error(error as string);
   }
 };

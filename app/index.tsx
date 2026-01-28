@@ -1,6 +1,14 @@
 import { images, offers } from "@/constants";
 import cn from "clsx";
-import { Dimensions, FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CartButton from "../components/CartButton";
 
@@ -38,7 +46,7 @@ export default function App() {
               android_ripple={{ color: "#fffff22" }}
               className={cn(
                 "flex-row rounded-2xl p-4 mb-5",
-                isEven ? "flex-row-reverse" : "flex-row"
+                isEven ? "flex-row-reverse" : "flex-row",
               )}
               style={{
                 backgroundColor: item.color,
@@ -59,7 +67,7 @@ export default function App() {
               <View
                 className={cn(
                   "flex-1 justify-between",
-                  isEven ? "pl-4" : "pr-4"
+                  isEven ? "pl-4" : "pr-4",
                 )}
               >
                 <Text className="text-white text-xl font-quicksand-bold leading-tight mb-2">
