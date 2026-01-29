@@ -1,6 +1,6 @@
 import CustomButton from "@/components/CustomButton";
 import CustonInput from "@/components/CustonInput";
-import { getCurrentUser, userSignUp } from "@/service/Appwrite";
+import { userSignUp } from "@/service/Appwrite";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
@@ -25,8 +25,6 @@ const SignUp = () => {
       await userSignUp({ name, email, password });
       Alert.alert("Success", "Sign Up Sucessfully");
       setForm({ name: "", email: "", password: "" });
-      console.log(getCurrentUser());
-      sd;
 
       router.replace("/(auth)/sign-in");
     } catch (error: any) {

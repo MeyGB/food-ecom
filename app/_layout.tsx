@@ -1,23 +1,29 @@
+import useAuthStore from "@/store/auth.store";
 import { useFonts } from "expo-font";
-import { SplashScreen, Tabs } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import "../global.css";
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
-    "Quicksand-Light": require("../assets/fonts/Quicksand-Light.ttf"),
-    "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
-    "Quicksand-Medium": require("../assets/fonts/Quicksand-Medium.ttf"),
-    "Quicksand-SemiBold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
-    "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
+  const { isLoading, fetchAuthenticatedUser } = useAuthStore();
+
+  const [fontsLoaded, error] = useFonts({
+    "QuickSand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
+    "QuickSand-Medium": require("../assets/fonts/Quicksand-Medium.ttf"),
+    "QuickSand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
+    "QuickSand-SemiBold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
+    "QuickSand-Light": require("../assets/fonts/Quicksand-Light.ttf"),
   });
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  });
+    if (error) throw error;
+    if (fontsLoaded) SplashScreen.hideAsync();
+  }, [fontsLoaded, error]);
 
-  if (!fontsLoaded) return null;
+  useEffect(() => {
+    fetchAuthenticatedUser();
+  }, []);
 
-  return <Tabs screenOptions={{ headerShown: false }} />;
+  if (!fontsLoaded || isLoading) return null;
+
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
