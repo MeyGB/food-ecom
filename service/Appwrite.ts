@@ -24,6 +24,9 @@ export const database = new Databases(client);
 
 export const db_name = process.env.EXPO_PUBLIC_APPWRITE_DATABASE!;
 export const table_user = process.env.EXPO_PUBLIC_APPWRITE_TABLE_USER!;
+export const table_menus = process.env.EXPO_PUBLIC_APPWRITE_TABLE_MENU!;
+export const table_categories =
+  process.env.EXPO_PUBLIC_APPWRITE_TABLE_CATEGORIES!;
 
 const avatar = new Avatars(client);
 
