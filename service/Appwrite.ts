@@ -1,4 +1,4 @@
-import { CreateUserParams, SignInParams } from "@/type";
+import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
 import {
   Account,
   Avatars,
@@ -22,9 +22,14 @@ export const account = new Account(client);
 export const storage = new Storage(client);
 export const database = new Databases(client);
 
+export const BUCKET_ID = process.env.EXPO_PUBLIC_APPWRITE_BUCKET_ID!;
 export const db_name = process.env.EXPO_PUBLIC_APPWRITE_DATABASE!;
 export const table_user = process.env.EXPO_PUBLIC_APPWRITE_TABLE_USER!;
 export const table_menus = process.env.EXPO_PUBLIC_APPWRITE_TABLE_MENU!;
+export const table_menu_customization =
+  process.env.EXPO_PUBLIC_APPWRITE_TABLE_MENU_CUSTOMIZATION!;
+export const table_customization =
+  process.env.EXPO_PUBLIC_APPWRITE_TABLE_CUSTOMIZATION!;
 export const table_categories =
   process.env.EXPO_PUBLIC_APPWRITE_TABLE_CATEGORIES!;
 
@@ -58,7 +63,8 @@ export const userSignIn = async ({ email, password }: SignInParams) => {
     const session = await account.createEmailPasswordSession(email, password);
     return session;
   } catch (e: any) {
-    throw new Error(e);
+    console.log("Other Error", e);
+    return null;
   }
 };
 
@@ -76,7 +82,7 @@ export const getCurrentUser = async () => {
     return response.documents[0] ?? null;
   } catch (error) {
     console.log("message", error);
-    throw new Error(error as string);
+    return null;
   }
 };
 export const userSignOut = async () => {
@@ -88,5 +94,15 @@ export const userSignOut = async () => {
   } catch (error: any) {
     console.error("SignOut Error:", error);
     throw new Error(error.message || "Logout failed");
+  }
+};
+
+export const getMenu = async ({ category, query }: GetMenuParams) => {
+  try {
+    const queries: string[] = [];
+    if (category) queries.push(Query.equal("category", category));
+    if (query) queries.push(Query.equal("name", query));
+  } catch (e) {
+    throw new Error(e as string);
   }
 };

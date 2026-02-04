@@ -33,6 +33,10 @@ const Search = () => {
           className="p-3 border border-gray-200 rounded-full bg-white"
         />
       </View>
+      {/* <Button
+        title="Seed"
+        onPress={() => seed().catch((e) => console.log("Error seeding", e))}
+      /> */}
     </SafeAreaView>
   );
 };

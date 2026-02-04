@@ -21,7 +21,9 @@ const SignIn = () => {
       await account.createEmailPasswordSession(form.email, form.password);
       Alert.alert("Success", "Login Sucessfully");
       setForm({ email: "", password: "" });
-      router.replace("/");
+      setTimeout(() => {
+        router.replace("/");
+      }, 300);
       return;
     } catch (error: any) {
       Alert.alert("Login failed", error?.message || "Something went wrong");
