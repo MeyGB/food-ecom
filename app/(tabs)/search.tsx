@@ -1,10 +1,28 @@
 import CartButton from "@/components/CartButton";
 import { images } from "@/constants";
-import React, { useState } from "react";
+import { getMenu } from "@/service/Appwrite";
+import useAppwrite from "@/service/useAppwrite";
+import { useLocalSearchParams } from "expo-router/build/hooks";
+import React, { useEffect, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 const Search = () => {
   const [search, setSearch] = useState("");
+  const { category, query } = useLocalSearchParams<{
+    category: string;
+    query: string;
+  }>();
+  const { data, refetch, loading } = useAppwrite({
+    fn: getMenu,
+    params: { category, query, limit: 2 },
+  });
+
+  useEffect(() => {
+    refetch({ category, query, limit: 2 });
+  }, [category, query]);
+  console.log(JSON.stringify(data, null, 2));
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-row justify-between items-center py-3 px-5">
