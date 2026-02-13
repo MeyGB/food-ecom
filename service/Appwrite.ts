@@ -97,12 +97,11 @@ export const userSignOut = async () => {
   }
 };
 
-export const getMenu = async ({ category, query, limit }: GetMenuParams) => {
+export const getMenu = async ({ category, query }: GetMenuParams) => {
   try {
     const queries: string[] = [];
-    if (category) queries.push(Query.equal("category", category));
+    if (category) queries.push(Query.equal("categories.$id", category));
     if (query) queries.push(Query.search("name", query));
-    if (limit) queries.push(Query.limit(limit));
     const menus = await database.listDocuments(db_name, table_menus, queries);
     return menus.documents;
   } catch (e) {
@@ -113,7 +112,7 @@ export const getMenu = async ({ category, query, limit }: GetMenuParams) => {
 export const getCategories = async () => {
   try {
     const categories = await database.listDocuments(db_name, table_categories);
-    return categories;
+    return categories.documents;
   } catch (e) {
     throw new Error(e as string);
   }
