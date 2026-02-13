@@ -20,25 +20,7 @@ export default function Home() {
   // console.log("USER:", JSON.stringify(user, null, 2));
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-row justify-between items-center px-5 py-3">
-        <View>
-          <Text className="text-sm font-bold text-orange-500">Delivery To</Text>
-          <TouchableOpacity className="flex-row items-center mt-1">
-            <Text className="text-base mr-1">Cambodia</Text>
-            <Image
-              source={images.arrowDown}
-              className="w-4 h-4"
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
-        <View>
-          <Text className="text-base font-semibold">
-            <CartButton />
-          </Text>
-        </View>
-      </View>
+    <SafeAreaView className="h-full bg-white">
       <FlatList
         data={offers}
         keyExtractor={(_, index) => index.toString()}
@@ -86,7 +68,29 @@ export default function Home() {
             </Pressable>
           );
         }}
-        contentContainerClassName="pb-28 px-5"
+        ListHeaderComponent={() => {
+          return (
+            <View className="flex-row justify-between items-center px-3 py-3">
+              <View>
+                <Text className="text-sm font-bold text-orange-500">
+                  SEARCH
+                </Text>
+                <TouchableOpacity className="flex-row items-center mt-1">
+                  <Text className="text-base mr-1">
+                    Find your favorite food.
+                  </Text>
+                  <Image
+                    source={images.arrowDown}
+                    className="w-4 h-4"
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              </View>
+              <CartButton />
+            </View>
+          );
+        }}
+        contentContainerClassName="pb-32 px-2"
       />
     </SafeAreaView>
   );

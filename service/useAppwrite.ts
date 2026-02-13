@@ -29,13 +29,12 @@ const useAppwrite = <T, P extends Record<string, string | number>>({
       setError(null);
 
       try {
-        const result = await fn({ ...fetchParams });
+        const result = await fn(fetchParams);
         setData(result);
-      } catch (err: unknown) {
-        const errorMessage =
-          err instanceof Error ? err.message : "An unknown error occurred";
-        setError(errorMessage);
-        Alert.alert("Error", errorMessage);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Unknown error";
+        setError(message);
+        Alert.alert("Error", message);
       } finally {
         setLoading(false);
       }
@@ -47,9 +46,11 @@ const useAppwrite = <T, P extends Record<string, string | number>>({
     if (!skip) {
       fetchData(params);
     }
-  }, []);
+  }, [params, skip, fetchData]);
 
-  const refetch = async (newParams?: P) => await fetchData(newParams!);
+  const refetch = async (newParams?: P) => {
+    await fetchData(newParams ?? params);
+  };
 
   return { data, loading, error, refetch };
 };

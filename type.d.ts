@@ -6,9 +6,10 @@ export interface MenuItem extends Models.Document {
   image_url: string;
   description: string;
   calories: number;
-  protein: number;
+  protien: number;
   rating: number;
   type: string;
+  categories: string;
 }
 
 export interface Category extends Models.Document {
@@ -104,4 +105,5 @@ interface SignInParams {
 interface GetMenuParams {
   category: string;
   query: string;
+  limit: number;
 }
